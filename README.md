@@ -18,6 +18,12 @@ Scroll with the mousewheel. Hold Shift to scroll to the top or bottom. Hold Ctrl
 
 [Fixed for WoW 7.1](https://github.com/tomchapin/Warmup) by tomchapin
 
+## Download Locations
+
+https://mods.curse.com/addons/wow/255272-warmup
+
+http://www.wowinterface.com/downloads/info24316-Warmup.html
+
 
 # Release Notes
 
