@@ -8,6 +8,9 @@ Type `/warmup` to open the frame again later.
 
 Scroll with the mousewheel. Hold Shift to scroll to the top or bottom. Hold Ctrl to scroll a full page up or down.
 
+## Important:
+Don't leave Warmup enabled every time you log in. The changes for GC data will have drastic effects on your performance. Warmup is a tool to aid addon development, not something to just install and forget about.
+
 ## History
 
 [Original version](http://www.wowinterface.com/downloads/info4939) by Tekkub.
