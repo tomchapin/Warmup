@@ -1,0 +1,13 @@
+## Interface: 70100
+## DefaultState: disabled
+
+## Title: Warmup
+## Notes: Tracks how long between addon loadup events
+## Author: tomchapin
+## X-Credits: Tekkub, Cybelorias/Dridzt, Phanx
+## X-Category: Development Tools
+## Version: 0.4.1
+
+## SavedVariables: WarmupSV
+
+Warmup.lua
