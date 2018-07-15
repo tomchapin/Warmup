@@ -1,4 +1,4 @@
--- Updated WarmUp by Cybeloras of Mal'Ganis. Uses debugprofile start/stop instead of GetTime because it seems that GetTime() is not updated during loading screens anymore.
+-- Updated WarmUp by Cybeloras. Uses debugprofile start/stop instead of GetTime because it seems that GetTime() is not updated during loading screens anymore.
 -- Further updated by Phanx for WoW 6.x (https://github.com/phanx-wow/Warmup)
 -- Addon forked by tomchapin to work with WoW 7.1
 -- tomchapin - Fixed CreateTitleRegion error so addon works with WoW 7.1 
@@ -124,7 +124,8 @@ Warmup = {}
 
 frame:SetScript("OnEvent", function(self, event, ...)
 	if eventcounts then
-		eventcounts[event] = (eventcounts[event] or 0) + 1
+		eventcounts[event] = (eventcounts[event] or {})
+		tinsert(eventcounts[event], GetCurrentEventID() or -1)
 		eventargs[event] = max(select("#", ...), eventargs[event] or 0)
 	end
 	if Warmup[event] then Warmup[event](Warmup, ...) end
@@ -207,13 +208,36 @@ end
 
 
 function Warmup:DumpEvents()
+	if not eventcounts then return end
 	local sortt = {}
 	for ev,val in pairs(eventcounts) do tinsert(sortt, ev) end
 
 	table.sort(sortt)
+	
+	outputFrame:AddMessage(format("Event counts and timings during loading screen at %s:", date("%H:%M:%S")))
+	if GetCVar('scriptProfile') ~= '1' then
+		outputFrame:AddMessage("(CPU Profiling is not on - timings will be shown as zero)")
+	end
 
 	for i,ev in pairs(sortt) do
-		outputFrame:AddMessage(format(threshcolors[1].."%d|r (%d) | %s%s|r", eventcounts[ev], eventargs[ev], threshcolors[4], ev))
+		local count = 0;
+		local time = 0;
+
+		for _, eventId in pairs(eventcounts[ev]) do 
+			count = count + 1
+			if eventId ~= -1 then
+				time = time + (GetEventTime(eventId) or 0)
+			end
+		end
+
+		-- Division here is because time is in milliseconds, not seconds. 
+		-- However, don't divide by 1000 so smaller values show up as more severe -
+		-- a single event's time is way more significant than an entire addon.
+		-- 50 seems like a good number to get colors that feel right. 
+		-- ~4ms is green, ~9ms is yellow, ~40ms is orange, ~70ms is red.
+		local timeColor = GetThreshColor("time", time/50) 
+
+		outputFrame:AddMessage(format("%s%07.3f ms|r | %s%2dx|r %s - %d args|r", timeColor, time, threshcolors[4], count, ev, eventargs[ev]))
 	end
 	outputFrame:AddMessage("------------")
 end
@@ -334,7 +358,7 @@ function Warmup:PLAYER_ENTERING_WORLD()
 	frame:UnregisterEvent("PLAYER_LOGOUT")
 	frame:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
-	--self:DumpEvents()
+	self:DumpEvents()
 	eventcounts = nil
 end
 
