@@ -1,4 +1,4 @@
--- Updated WarmUp by Cybeloras of Mal'Ganis. Uses debugprofile start/stop instead of GetTime because it seems that GetTime() is not updated during loading screens anymore.
+-- Updated WarmUp by Cybeloras. Uses debugprofile start/stop instead of GetTime because it seems that GetTime() is not updated during loading screens anymore.
 -- Further updated by Phanx for WoW 6.x (https://github.com/phanx-wow/Warmup)
 -- Addon forked by tomchapin to work with WoW 7.1
 -- tomchapin - Fixed CreateTitleRegion error so addon works with WoW 7.1 
@@ -226,7 +226,7 @@ function Warmup:DumpEvents()
 		for _, eventId in pairs(eventcounts[ev]) do 
 			count = count + 1
 			if eventId ~= -1 then
-				time = time + GetEventTime(eventId)
+				time = time + (GetEventTime(eventId) or 0)
 			end
 		end
 
