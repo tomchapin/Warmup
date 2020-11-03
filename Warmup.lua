@@ -3,11 +3,12 @@
 -- Addon forked by tomchapin to work with WoW 7.1
 -- tomchapin - Fixed CreateTitleRegion error so addon works with WoW 7.1 
 -- tomchapin - Renamed addon so it has a zero at the front and hopefully will load first.
+-- tomchapin - Fixed the CreateFrame function (per recommendation from Bezal1)
 
-local containerFrame = CreateFrame("Frame", "WarmupOutputFrame", UIParent)
+local containerFrame = CreateFrame("Frame", "WarmupOutputFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 containerFrame:Hide()
 
-local outputFrame = CreateFrame("ScrollingMessageFrame", "WarmupChatFrame", containerFrame)
+local outputFrame = CreateFrame("ScrollingMessageFrame", "WarmupChatFrame", containerFrame, BackdropTemplateMixin and "BackdropTemplate")
 outputFrame:SetFontObject("ChatFontNormal")
 outputFrame:SetMaxLines(512)
 
@@ -38,7 +39,7 @@ containerFrame:SetScript("OnShow", function(self)
 	bg:SetAlpha(0.9)
 	--bg:SetVertexColor(204/255, 225/255, 1)
 
-	local close = CreateFrame("Button", nil, self, "UIPanelCloseButton")
+	local close = CreateFrame("Button", nil, self, "UIPanelCloseButton", BackdropTemplateMixin and "BackdropTemplate")
 	close:SetPoint("TOPRIGHT")
 
 	local title = self:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -119,7 +120,7 @@ start()
 	EVENT_TRACE_MAX_ENTRIES = 10000
 	--]]
 
-local frame = CreateFrame("Frame", "WarmupFrame", UIParent)
+local frame = CreateFrame("Frame", "WarmupFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate")
 Warmup = {}
 
 frame:SetScript("OnEvent", function(self, event, ...)

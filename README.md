@@ -30,6 +30,10 @@ http://www.wowinterface.com/downloads/info24316-Warmup.html
 
 # Release Notes
 
+## v0.4.2 (2020-11-02)
+- Fixed the CreateFrame function (per recommendation from Bezal1)
+- Added Bezal1 to the X-Credits
+
 ## v0.4.1 (2016-12-16)
 - Fixed CreateTitleRegion error so addon works with WoW 7.1 (tomchapin)
 - Updated wow interface version (tomchapin)
